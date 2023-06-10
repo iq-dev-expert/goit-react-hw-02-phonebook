@@ -5,12 +5,7 @@ import Filter from './Filter';
 import { nanoid } from 'nanoid';
 
 class App extends Component {
-  state = {
-    contacts: [],
-    filter: '',
-    name: '',
-    number: '',
-  };
+  state = { contacts: [], filter: '' };
 
   onChange = e => {
     const { name, value } = e.target;
@@ -18,19 +13,16 @@ class App extends Component {
     this.setState({ [name]: value });
   };
 
-  onAddButtonClick = e => {
-    e.preventDefault();
+  onFormSubmit = formState => {
     const id = nanoid(16);
 
     this.setState(({ contacts }) => {
-      const { name, number } = this.state;
+      const { name, number } = formState;
 
       return {
         contacts: [...contacts, { name, number, id }],
       };
     });
-
-    this.setState({ name: '', number: '' });
   };
 
   filterContacts = () => {
@@ -44,16 +36,12 @@ class App extends Component {
   };
 
   render() {
-    const { state, onChange, onAddButtonClick, filterContacts } = this;
+    const { state, onChange, filterContacts, onFormSubmit } = this;
 
     return (
       <div>
         <h1>Phonebook</h1>
-        <ContactForm
-          value={state}
-          onChange={onChange}
-          onAddButtonClick={onAddButtonClick}
-        />
+        <ContactForm onFormSubmit={onFormSubmit} />
 
         <h2>Contacts</h2>
         <Filter value={state} onChange={onChange} />

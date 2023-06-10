@@ -1,12 +1,29 @@
 import React, { Component } from 'react';
 
 class ContactForm extends Component {
+  state = { name: '', number: '' };
+
+  onChange = e => {
+    const { name, value } = e.target;
+
+    this.setState({ [name]: value });
+  };
+
+  onAddButtonClick = e => {
+    e.preventDefault();
+
+    this.props.onFormSubmit(this.state);
+
+    this.resetForm();
+  };
+
+  resetForm = () => {
+    this.setState({ name: '', number: '' });
+  };
+
   render() {
-    const {
-      value: { name, number },
-      onChange,
-      onAddButtonClick,
-    } = this.props;
+    const { name, number } = this.state;
+    const { onChange, onAddButtonClick } = this;
 
     return (
       <form onSubmit={onAddButtonClick}>
