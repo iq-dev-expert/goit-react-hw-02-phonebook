@@ -1,10 +1,13 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
+import Filter from './Filter';
 import { nanoid } from 'nanoid';
+
 class App extends Component {
   state = {
     contacts: [],
+    filter: '',
     name: '',
     number: '',
   };
@@ -19,24 +22,29 @@ class App extends Component {
     e.preventDefault();
     const id = nanoid(16);
 
-    this.setState(prevState => {
+    this.setState(({ contacts }) => {
       const { name, number } = this.state;
 
       return {
-        contacts: [...prevState.contacts, { name, number, id }],
+        contacts: [...contacts, { name, number, id }],
       };
     });
 
     this.setState({ name: '', number: '' });
   };
 
+  filterContacts = () => {
+    const { filter, contacts } = this.state;
+
+    const filterToLowerCase = filter.toLowerCase();
+
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filterToLowerCase)
+    );
+  };
+
   render() {
-    const {
-      state,
-      state: { contacts },
-      onChange,
-      onAddButtonClick,
-    } = this;
+    const { state, onChange, onAddButtonClick, filterContacts } = this;
 
     return (
       <div>
@@ -48,8 +56,8 @@ class App extends Component {
         />
 
         <h2>Contacts</h2>
-        {/* <Filter ... /> */}
-        <ContactList contacts={contacts} />
+        <Filter value={state} onChange={onChange} />
+        <ContactList contacts={filterContacts()} />
       </div>
     );
   }
