@@ -23,11 +23,7 @@ function ContactList({ contacts, onDeleteButtonClick }) {
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }).isRequired
+    PropTypes.objectOf(PropTypes.string.isRequired).isRequired
   ).isRequired,
   onDeleteButtonClick: PropTypes.func.isRequired,
 };

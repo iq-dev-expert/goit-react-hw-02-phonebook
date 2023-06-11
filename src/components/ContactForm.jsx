@@ -80,11 +80,7 @@ class ContactForm extends Component {
 
 ContactForm.propTypes = {
   contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }).isRequired
+    PropTypes.objectOf(PropTypes.string.isRequired).isRequired
   ).isRequired,
   onFormSubmit: PropTypes.func.isRequired,
 };
