@@ -4,6 +4,8 @@ import ContactList from './ContactList';
 import Filter from './Filter';
 import { nanoid } from 'nanoid';
 import { Container } from './App.styled';
+import { ThemeProvider } from '@emotion/react';
+import { theme } from 'utils/Theme';
 
 class App extends Component {
   state = {
@@ -50,17 +52,19 @@ class App extends Component {
       this;
 
     return (
-      <Container>
-        <h1>Phonebook</h1>
-        <ContactForm onFormSubmit={onFormSubmit} contacts={state.contacts} />
+      <ThemeProvider theme={theme}>
+        <Container>
+          <h1>Phonebook</h1>
+          <ContactForm onFormSubmit={onFormSubmit} contacts={state.contacts} />
 
-        <h2>Contacts</h2>
-        <Filter value={state} onChange={onChange} />
-        <ContactList
-          contacts={filterContacts()}
-          onDeleteButtonClick={deleteContact}
-        />
-      </Container>
+          <h2>Contacts</h2>
+          <Filter value={state} onChange={onChange} />
+          <ContactList
+            contacts={filterContacts()}
+            onDeleteButtonClick={deleteContact}
+          />
+        </Container>
+      </ThemeProvider>
     );
   }
 }
