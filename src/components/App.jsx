@@ -8,8 +8,6 @@ class App extends Component {
   state = {
     contacts: [],
     filter: '',
-    name: '',
-    number: '',
   };
 
   onChange = e => {
@@ -18,19 +16,16 @@ class App extends Component {
     this.setState({ [name]: value });
   };
 
-  onAddButtonClick = e => {
-    e.preventDefault();
+  onFormSubmit = formState => {
     const id = nanoid(16);
 
     this.setState(({ contacts }) => {
-      const { name, number } = this.state;
+      const { name, number } = formState;
 
       return {
         contacts: [...contacts, { name, number, id }],
       };
     });
-
-    this.setState({ name: '', number: '' });
   };
 
   filterContacts = () => {
@@ -43,21 +38,27 @@ class App extends Component {
     );
   };
 
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
+
   render() {
-    const { state, onChange, onAddButtonClick, filterContacts } = this;
+    const { state, onChange, filterContacts, onFormSubmit, deleteContact } =
+      this;
 
     return (
       <div>
         <h1>Phonebook</h1>
-        <ContactForm
-          value={state}
-          onChange={onChange}
-          onAddButtonClick={onAddButtonClick}
-        />
+        <ContactForm onFormSubmit={onFormSubmit} contacts={state.contacts} />
 
         <h2>Contacts</h2>
         <Filter value={state} onChange={onChange} />
-        <ContactList contacts={filterContacts()} />
+        <ContactList
+          contacts={filterContacts()}
+          onDeleteButtonClick={deleteContact}
+        />
       </div>
     );
   }

@@ -1,12 +1,47 @@
 import React, { Component } from 'react';
 
 class ContactForm extends Component {
-  render() {
+  state = { name: '', number: '' };
+
+  onChange = e => {
+    const { name, value } = e.target;
+
+    this.setState({ [name]: value });
+  };
+
+  onAddButtonClick = e => {
+    e.preventDefault();
+
     const {
-      value: { name, number },
-      onChange,
-      onAddButtonClick,
-    } = this.props;
+      props: { contacts, onFormSubmit },
+      state,
+      isContactInPhonebook,
+      resetForm,
+    } = this;
+
+    if (isContactInPhonebook(contacts)) {
+      alert(`${state.name} is already in contacts.`);
+      resetForm();
+      return;
+    }
+
+    onFormSubmit(state);
+    resetForm();
+  };
+
+  isContactInPhonebook = contacts => {
+    return contacts.find(
+      contact => contact.name.toLowerCase() === this.state.name.toLowerCase()
+    );
+  };
+
+  resetForm = () => {
+    this.setState({ name: '', number: '' });
+  };
+
+  render() {
+    const { name, number } = this.state;
+    const { onChange, onAddButtonClick } = this;
 
     return (
       <form onSubmit={onAddButtonClick}>
