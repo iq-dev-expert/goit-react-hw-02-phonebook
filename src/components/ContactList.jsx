@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { List, Item, ItemText } from './ContactList.styled';
-import { Button } from './Template.styled';
+import { Button } from '../style/Template.styled';
 
 function ContactList({ contacts, onDeleteButtonClick }) {
   return (
