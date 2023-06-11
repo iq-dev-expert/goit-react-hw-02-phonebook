@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Label } from './ContactForm.styled';
+import { Form } from './ContactForm.styled';
 import { Button } from '../style/Template.styled';
 
 class ContactForm extends Component {
@@ -48,7 +48,7 @@ class ContactForm extends Component {
 
     return (
       <Form onSubmit={onAddButtonClick}>
-        <Label>
+        <label>
           Name
           <input
             type="text"
@@ -59,8 +59,8 @@ class ContactForm extends Component {
             value={name}
             onChange={onChange}
           />
-        </Label>
-        <Label>
+        </label>
+        <label>
           Number
           <input
             type="tel"
@@ -71,7 +71,7 @@ class ContactForm extends Component {
             value={number}
             onChange={onChange}
           />
-        </Label>
+        </label>
         <Button type="submit">Add contact</Button>
       </Form>
     );
