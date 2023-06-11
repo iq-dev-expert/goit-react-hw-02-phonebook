@@ -6,10 +6,10 @@ export const Form = styled.form`
   margin: 0 0 20px 0;
 
   border: 1px solid;
-`;
 
-export const Label = styled.label`
-  display: block;
+  label {
+    display: block;
 
-  margin: 0 0 20px 0;
+    margin: 0 0 20px 0;
+  }
 `;
