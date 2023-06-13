@@ -19,12 +19,15 @@ class App extends Component {
     this.setState({ [name]: value });
   };
 
-  onFormSubmit = formState => {
+  onFormSubmit = ({ name, number }) => {
+    if (this.isContactInPhonebook(name)) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
+
     const id = nanoid(16);
 
     this.setState(({ contacts }) => {
-      const { name, number } = formState;
-
       return {
         contacts: [...contacts, { name, number, id }],
       };
@@ -41,6 +44,12 @@ class App extends Component {
     );
   };
 
+  isContactInPhonebook = name => {
+    return this.state.contacts.some(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+  };
+
   deleteContact = contactId => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
@@ -48,20 +57,22 @@ class App extends Component {
   };
 
   render() {
-    const { contacts, filter } = this.state;
+    const { filter, contacts } = this.state;
 
     return (
       <ThemeProvider theme={theme}>
         <Container>
           <h1>Phonebook</h1>
-          <ContactForm onFormSubmit={this.onFormSubmit} contacts={contacts} />
+          <ContactForm onFormSubmit={this.onFormSubmit} />
 
           <h2>Contacts</h2>
           <Filter value={filter} onChange={this.onChange} />
-          <ContactList
-            contacts={this.filterContacts()}
-            onDeleteButtonClick={this.deleteContact}
-          />
+          {contacts.length ? (
+            <ContactList
+              contacts={this.filterContacts()}
+              onDeleteButtonClick={this.deleteContact}
+            />
+          ) : null}
         </Container>
       </ThemeProvider>
     );

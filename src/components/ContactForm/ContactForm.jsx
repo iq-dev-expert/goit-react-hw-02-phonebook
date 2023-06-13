@@ -15,22 +15,8 @@ class ContactForm extends Component {
   onAddButtonClick = e => {
     e.preventDefault();
 
-    const { contacts, onFormSubmit } = this.props;
-
-    if (this.isContactInPhonebook(contacts)) {
-      alert(`${this.state.name} is already in contacts.`);
-      this.resetForm();
-      return;
-    }
-
-    onFormSubmit(this.state);
+    this.props.onFormSubmit({ ...this.state });
     this.resetForm();
-  };
-
-  isContactInPhonebook = contacts => {
-    return contacts.find(
-      contact => contact.name.toLowerCase() === this.state.name.toLowerCase()
-    );
   };
 
   resetForm = () => {
@@ -73,9 +59,6 @@ class ContactForm extends Component {
 }
 
 ContactForm.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.objectOf(PropTypes.string.isRequired).isRequired
-  ).isRequired,
   onFormSubmit: PropTypes.func.isRequired,
 };
 
