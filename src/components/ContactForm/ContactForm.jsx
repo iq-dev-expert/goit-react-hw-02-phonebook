@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from './ContactForm.styled';
-import { Button } from '../style/Template.styled';
+import { Button } from '../../style/Template.styled';
 
 class ContactForm extends Component {
   state = { name: '', number: '' };
@@ -15,21 +15,16 @@ class ContactForm extends Component {
   onAddButtonClick = e => {
     e.preventDefault();
 
-    const {
-      props: { contacts, onFormSubmit },
-      state,
-      isContactInPhonebook,
-      resetForm,
-    } = this;
+    const { contacts, onFormSubmit } = this.props;
 
-    if (isContactInPhonebook(contacts)) {
-      alert(`${state.name} is already in contacts.`);
-      resetForm();
+    if (this.isContactInPhonebook(contacts)) {
+      alert(`${this.state.name} is already in contacts.`);
+      this.resetForm();
       return;
     }
 
-    onFormSubmit(state);
-    resetForm();
+    onFormSubmit(this.state);
+    this.resetForm();
   };
 
   isContactInPhonebook = contacts => {
@@ -44,10 +39,9 @@ class ContactForm extends Component {
 
   render() {
     const { name, number } = this.state;
-    const { onChange, onAddButtonClick } = this;
 
     return (
-      <Form onSubmit={onAddButtonClick}>
+      <Form onSubmit={this.onAddButtonClick}>
         <label>
           Name
           <input
@@ -57,7 +51,7 @@ class ContactForm extends Component {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
             value={name}
-            onChange={onChange}
+            onChange={this.onChange}
           />
         </label>
         <label>
@@ -69,7 +63,7 @@ class ContactForm extends Component {
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             value={number}
-            onChange={onChange}
+            onChange={this.onChange}
           />
         </label>
         <Button type="submit">Add contact</Button>

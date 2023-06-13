@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import ContactForm from './ContactForm';
-import ContactList from './ContactList';
-import Filter from './Filter';
+import ContactForm from '../ContactForm/ContactForm';
+import ContactList from '../ContactList/ContactList';
+import Filter from '../Filter/Filter';
 import { nanoid } from 'nanoid';
 import { Container } from './App.styled';
 import { ThemeProvider } from '@emotion/react';
@@ -48,20 +48,19 @@ class App extends Component {
   };
 
   render() {
-    const { state, onChange, filterContacts, onFormSubmit, deleteContact } =
-      this;
+    const { contacts, filter } = this.state;
 
     return (
       <ThemeProvider theme={theme}>
         <Container>
           <h1>Phonebook</h1>
-          <ContactForm onFormSubmit={onFormSubmit} contacts={state.contacts} />
+          <ContactForm onFormSubmit={this.onFormSubmit} contacts={contacts} />
 
           <h2>Contacts</h2>
-          <Filter value={state} onChange={onChange} />
+          <Filter value={filter} onChange={this.onChange} />
           <ContactList
-            contacts={filterContacts()}
-            onDeleteButtonClick={deleteContact}
+            contacts={this.filterContacts()}
+            onDeleteButtonClick={this.deleteContact}
           />
         </Container>
       </ThemeProvider>
