@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Label } from './Filter.styled';
 
-function Filter({ value: { filter }, onChange }) {
+function Filter({ filter, onChange }) {
   return (
     <Label>
       Find contacts by name
@@ -11,13 +11,8 @@ function Filter({ value: { filter }, onChange }) {
 }
 
 Filter.propTypes = {
+  filter: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.shape({
-    contacts: PropTypes.arrayOf(
-      PropTypes.objectOf(PropTypes.string.isRequired).isRequired
-    ).isRequired,
-    filter: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default Filter;
